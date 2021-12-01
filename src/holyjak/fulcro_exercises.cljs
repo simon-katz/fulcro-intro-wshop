@@ -2,19 +2,32 @@
   "This is a series of exercises to help you learn Fulcro, via the REPL. See the README.md!
 
   How to use:
-  - Load this file into the cljs REPL (using the commands provided by your editor)
+
+  - Load this file into the cljs REPL (using the commands provided by
+    your editor)
+
   - For each exercise:
-    1. Un-comment *temporarily* the exercise you are working on (by replacing `(comment ...`
-      with `(do ;comment ...`) Shadow-cljs will thus evaluate the code and it will render.
-      Tip: Hard-reload the page occasionally to get rid of residues of past exercises.
-    2. Read the instructions in the comments, make your changes, wait for shadow to apply them
-    3. Regularly look at what your solution looks like in Fulcro Inspect (Client DB, ...) to
-       get familiar with this essential tool.
-    4. Call `(hint <exercises number>)` to get help. Repeated calls may provide more help.
-       Even if you want to do it without help, check out all the hints eventually. They may
-       contain useful insights.
-    5. When done, compare your solution with mine in the `holyjak.solutions` namespace.
+
+    1. Un-comment *temporarily* the exercise you are working on (by
+       replacing `(comment ...` with `(do ;comment ...`) Shadow-cljs will
+       thus evaluate the code and it will render. Tip: Hard-reload the page
+       occasionally to get rid of residues of past exercises.
+
+    2. Read the instructions in the comments, make your changes, wait
+       for shadow to apply them
+
+    3. Regularly look at what your solution looks like in Fulcro
+       Inspect (Client DB, ...) to get familiar with this essential tool.
+
+    4. Call `(hint <exercises number>)` to get help. Repeated calls
+       may provide more help. Even if you want to do it without help, check
+       out all the hints eventually. They may contain useful insights.
+
+    5. When done, compare your solution with mine in the
+       `holyjak.solutions` namespace.
+
     6. Finally, comment-out the exercise again and go on to the next one.
+
   - See 'Troubleshooting and getting help during the exercises' in the README
   "
   (:require
