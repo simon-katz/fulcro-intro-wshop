@@ -59,7 +59,9 @@
     (config-and-render! Root00)
     ,))
 
-(comment ; 0 "Try it out!"
+(case 2
+
+  0 ; "Try it out!"
   (do
     ;; LEARNING OBJECTIVES: Get familiar with switching to a new exercise and using the hints.
     (defsc Root0 [_ _]
@@ -72,9 +74,9 @@
       (hint 0)
       (hint 0))
 
-    nil))
+    nil)
 
-(comment ; 1 "Hard-coded DOM"
+  1 ; "Hard-coded DOM"
   (do
     ;; TASK:
     ;; Complete the body of the Root1 component to render the following html:
@@ -102,9 +104,9 @@
                        (dom/li "Full-stack")
                        (dom/li "Well-designed"))))
 
-    (config-and-render! Root1)))
+    (config-and-render! Root1))
 
-(do ; comment ; 2 "Extracting a child component"
+  2 ; "Extracting a child component"
   (do
     ;; TASK:
     ;; Refactor the previous solution by moving the `<li>` into a separate

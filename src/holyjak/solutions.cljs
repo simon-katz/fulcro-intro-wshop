@@ -15,6 +15,20 @@
 ;; TIP: Use your editor's powers to collapse all the comments and only open the one you want to study
 ;;      (Cursive: 'Collapse All', `Shift Cmd -` on Mac)
 
+(comment ; 0 "Try it out!"
+  (do
+    (defsc Root0 [_ _]
+      (h1 "Hello, I am a Fulcro app from the exercise 0!"))
+
+    (config-and-render! Root0)
+
+    (comment ; try running the hint fn 3 times!
+      (hint 0)
+      (hint 0)
+      (hint 0))
+
+    nil))
+
 (comment ; 1 "Hard-coded DOM"
   (do
     (defsc Root1 [_ _]
