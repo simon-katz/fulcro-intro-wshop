@@ -46,7 +46,7 @@
 
 ;; ### TODO: Read the namespace docstring for instructions how to work with the exercises ###
 
-(do; comment
+(comment
   (do
     ;; TASK 0.0: Comment this out by replacing the `(do; comment` above with `(comment` and go on to the next exercise.
     ;; LEARNING OBJECTIVES: Get familiar with switching from an exercise to another.
@@ -74,7 +74,7 @@
 
     nil))
 
-(comment ; 1 "Hard-coded DOM"
+(do ; comment ; 1 "Hard-coded DOM"
   (do
     ;; TASK:
     ;; Complete the body of the Root1 component to render the following html:
@@ -95,7 +95,12 @@
     ;; - https://reactjs.org/docs/dom-elements.html#style
     (defsc Root1 [_ _]
       {}
-      "TODO")
+      (dom/div (h1 {:id    "title2"
+                    :style {:text-align "center"}}
+                   "Fulcro is:")
+               (dom/ul (dom/li "Malleable")
+                       (dom/li "Full-stack")
+                       (dom/li "Well-designed"))))
 
     (config-and-render! Root1)))
 
