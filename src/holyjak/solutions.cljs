@@ -39,7 +39,9 @@
 (comment ; 2 "Extracting a child component"
   (do
     (def value-proposition-points
-      [{:proposition/label "Malleable"} {:proposition/label "Full-stack"} {:proposition/label "Well-designed"}])
+      [{:proposition/label "Malleable"}
+       {:proposition/label "Full-stack"}
+       {:proposition/label "Well-designed"}])
 
     (defsc ValuePropositionPoint [_ {:proposition/keys [label]}]
            (li label))
