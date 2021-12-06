@@ -59,7 +59,7 @@
     (config-and-render! Root00)
     ,))
 
-(case 2
+(case 3
 
   0 ; "Try it out!"
   (do
@@ -145,9 +145,9 @@
     ;; Task 2.b: Make sure you do not get the React error <<Each child in a list
     ;; should have a unique "key" prop.>> in the Chrome Console.
     ;; (hint 2)
-    ,))
+    ,)
 
-(comment ; 3 "Externalizing data"
+  3 ; "Externalizing data"
   (do
     ;; TASK:
     ;; We still want to render the same HTML but this time we want to read the
@@ -160,9 +160,19 @@
     ;;
     ;; RESOURCES:
     ;; - https://fulcro-community.github.io/guides/tutorial-minimalist-fulcro/#_the_anatomy_of_a_fulcro_component_query_ident_body
-    (defsc Root3 [_ _]
-      {}
-      "TODO")
+
+    (defsc ValuePropositionPointV3 [_ {:proposition/keys [label]}]
+      {:query [:proposition/label]}
+      (li label))
+
+    (def ui-value-proposition-point-v3
+      (comp/factory ValuePropositionPointV3 {:keyfn :proposition/label}))
+
+    (defsc Root3 [_ {:page/keys [heading value-proposition-points]}]
+      {:query [:page/heading {:page/value-proposition-points (comp/get-query ValuePropositionPointV3)}]}
+      (div
+       (h1 :#title {:style {:textAlign "center"}} "hdr:" heading)
+       (ul (map ui-value-proposition-point-v3 value-proposition-points))))
 
     (config-and-render!
      Root3
