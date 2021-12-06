@@ -1,18 +1,18 @@
 (ns fulcro-todomvc.server
   (:require
-    [clojure.core.async :as async]
-    [com.fulcrologic.fulcro.algorithms.do-not-use :as util]
-    [com.fulcrologic.fulcro.server.api-middleware :as fmw :refer [not-found-handler wrap-api]]
-    [com.wsscode.pathom.connect :as pc]
-    [com.wsscode.pathom.core :as p]
-    [immutant.web :as web]
-    [ring.middleware.content-type :refer [wrap-content-type]]
-    [ring.middleware.not-modified :refer [wrap-not-modified]]
-    [ring.middleware.resource :refer [wrap-resource]]
-    [ring.util.response :refer [content-type response file-response resource-response]]
-    [taoensso.timbre :as log]
-    [clojure.tools.namespace.repl :as tools-ns]
-    [com.fulcrologic.fulcro.algorithms.tempid :as tempid]))
+   [clojure.core.async :as async]
+   [com.fulcrologic.fulcro.algorithms.do-not-use :as util]
+   [com.fulcrologic.fulcro.server.api-middleware :as fmw :refer [not-found-handler wrap-api]]
+   [com.wsscode.pathom.connect :as pc]
+   [com.wsscode.pathom.core :as p]
+   [immutant.web :as web]
+   [ring.middleware.content-type :refer [wrap-content-type]]
+   [ring.middleware.not-modified :refer [wrap-not-modified]]
+   [ring.middleware.resource :refer [wrap-resource]]
+   [ring.util.response :refer [content-type response file-response resource-response]]
+   [taoensso.timbre :as log]
+   [clojure.tools.namespace.repl :as tools-ns]
+   [com.fulcrologic.fulcro.algorithms.tempid :as tempid]))
 
 (def item-db (atom {1 {:item/id       1
                        :item/label    "Item 1"
@@ -68,9 +68,9 @@
 
 (defn- to-all-todos [db f]
   (into {}
-    (map (fn [[id todo]]
-           [id (f todo)]))
-    db))
+        (map (fn [[id todo]]
+               [id (f todo)]))
+        db))
 
 (pc/defmutation todo-check-all [env _]
   {::pc/sym    `fulcro-todomvc.api/todo-check-all
@@ -119,7 +119,7 @@
     2 {:list/title "Another List"
        :list/items [{:item/id 99, :item/label "Hardcoded item", :item/complete true}
                     (assoc (get @item-db 1)
-                      :item/label "Item 1 - re-loaded from server")]}))
+                           :item/label "Item 1 - re-loaded from server")]}))
 
 ;; how to go from :item/id to item details.
 (pc/defresolver item-resolver [env {:keys [item/id] :as params}]
@@ -140,14 +140,14 @@
 ;; setup for a given connect system
 (def parser
   (p/parser
-    {::p/env     {::p/reader                 [p/map-reader
-                                              pc/reader2
-                                              pc/open-ident-reader]
-                  ::pc/mutation-join-globals [:tempids]}
-     ::p/mutate  pc/mutate
-     ::p/plugins [(pc/connect-plugin {::pc/register my-resolvers})
-                  (p/post-process-parser-plugin p/elide-not-found)
-                  p/error-handler-plugin]}))
+   {::p/env     {::p/reader                 [p/map-reader
+                                             pc/reader2
+                                             pc/open-ident-reader]
+                 ::pc/mutation-join-globals [:tempids]}
+    ::p/mutate  pc/mutate
+    ::p/plugins [(pc/connect-plugin {::pc/register my-resolvers})
+                 (p/post-process-parser-plugin p/elide-not-found)
+                 p/error-handler-plugin]}))
 
 (defn wrap-index [handler]
   (fn [req]
@@ -157,14 +157,14 @@
       (handler req))))
 
 (def middleware (-> not-found-handler
-                  (wrap-api {:uri    "/api"
-                             :parser (fn [query] (parser {} query))})
-                  (fmw/wrap-transit-params)
-                  (fmw/wrap-transit-response)
-                  (wrap-resource "public")
-                  wrap-index
-                  wrap-content-type
-                  wrap-not-modified))
+                    (wrap-api {:uri    "/api"
+                               :parser (fn [query] (parser {} query))})
+                    (fmw/wrap-transit-params)
+                    (fmw/wrap-transit-response)
+                    (wrap-resource "public")
+                    wrap-index
+                    wrap-content-type
+                    wrap-not-modified))
 
 (defonce server (atom nil))
 

@@ -1,9 +1,9 @@
 (ns holyjak.fulcro-exercises.impl
   (:require
-    [holyjak.fulcro-exercises.mock-server :refer [mock-remote]]
-    [clojure.string :as str]
-    [com.fulcrologic.fulcro.application :as app]
-    [com.fulcrologic.fulcro.components :as comp :refer [defsc]]))
+   [holyjak.fulcro-exercises.mock-server :refer [mock-remote]]
+   [clojure.string :as str]
+   [com.fulcrologic.fulcro.application :as app]
+   [com.fulcrologic.fulcro.components :as comp :refer [defsc]]))
 
 (declare hints)
 (defonce hints-shown (atom nil))
@@ -22,8 +22,8 @@
       next?
       (do (swap! hints-shown update exercise-nr (fnil inc 0))
           (cond-> (subvec exercise-hints shown-previously (inc shown-previously))
-                  more? (conj "Repeat for more...")
-                  true printit!))
+            more? (conj "Repeat for more...")
+            true printit!))
 
       :else
       (printit! exercise-hints))))
@@ -55,8 +55,8 @@
                           (.-name RootComponent))
          remotes       (some-> resolvers seq mock-remote)
          app           (if current-root? @current-app (app/fulcro-app
-                                                        {:initial-db initial-db
-                                                         :remotes    remotes}))]
+                                                       {:initial-db initial-db
+                                                        :remotes    remotes}))]
 
      (when remotes
        (println "LOG: Configured the remote" (-> remotes keys first) "for the Fulcro App"))
@@ -98,4 +98,3 @@
       "7.2 load! does internally transact a mutation and can be called as-is, directly from the :onClick. Use the component's `this` instead of `app7` there."
       "7.3 After you factor out a resolver, remember to add it to the `:resolvers` list, as Pathom needs to be informed of it."
       "7.4 Use the `:target` option of load! with `(targeting/replace-at ..)`."]})
-

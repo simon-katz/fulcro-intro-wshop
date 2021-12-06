@@ -31,16 +31,16 @@
   - See 'Troubleshooting and getting help during the exercises' in the README
   "
   (:require
-    [holyjak.fulcro-exercises.impl :refer [hint config-and-render! show-client-db]]
-    [com.fulcrologic.fulcro.algorithms.merge :as merge]
-    [com.fulcrologic.fulcro.algorithms.data-targeting :as targeting]
-    [com.fulcrologic.fulcro.algorithms.normalized-state :as norm]
-    [com.fulcrologic.fulcro.application :as app]
-    [com.fulcrologic.fulcro.components :as comp :refer [defsc transact!]]
-    [com.fulcrologic.fulcro.data-fetch :as df]
-    [com.fulcrologic.fulcro.mutations :refer [defmutation]]
-    [com.fulcrologic.fulcro.dom :as dom :refer [button div form h1 h2 h3 input label li ol p ul]]
-    [com.wsscode.pathom.connect :as pc :refer [defresolver]]))
+   [holyjak.fulcro-exercises.impl :refer [hint config-and-render! show-client-db]]
+   [com.fulcrologic.fulcro.algorithms.merge :as merge]
+   [com.fulcrologic.fulcro.algorithms.data-targeting :as targeting]
+   [com.fulcrologic.fulcro.algorithms.normalized-state :as norm]
+   [com.fulcrologic.fulcro.application :as app]
+   [com.fulcrologic.fulcro.components :as comp :refer [defsc transact!]]
+   [com.fulcrologic.fulcro.data-fetch :as df]
+   [com.fulcrologic.fulcro.mutations :refer [defmutation]]
+   [com.fulcrologic.fulcro.dom :as dom :refer [button div form h1 h2 h3 input label li ol p ul]]
+   [com.wsscode.pathom.connect :as pc :refer [defresolver]]))
 
 (defn init [])
 
@@ -52,9 +52,9 @@
     ;; LEARNING OBJECTIVES: Get familiar with switching from an exercise to another.
     (defsc Root00 [_ _]
       (div
-        (h1 "Welcome to Fulcro exercises!")
-        (p "This is an example what an exercise looks like while you work on it.")
-        (p "Just comment this exercises out as describe in the code comment above and go on to the next.")))
+       (h1 "Welcome to Fulcro exercises!")
+       (p "This is an example what an exercise looks like while you work on it.")
+       (p "Just comment this exercises out as describe in the code comment above and go on to the next.")))
 
     (config-and-render! Root00)
     ,))
@@ -165,20 +165,20 @@
       "TODO")
 
     (config-and-render!
-      Root3
-      {:initial-db
-       ;; NOTE: Normally the initial-db we pass here should be already normalized but
-       ;; since we do not care about normalization and are happy with denormalized data
-       ;; in this exercise, it is OK to pass in the data tree as-is.
-       ;; BEWARE: The initial data is only processed at app initialization, i.e.
-       ;; not after hot-reloading of a code change
-       {:page/heading "<3> Fulcro is:"
-        :page/value-proposition-points
-                      [{:proposition/label "Malleable"}
-                       {:proposition/label "Full-stack"}
-                       {:proposition/label "Well-designed"}]}})
+     Root3
+     {:initial-db
+      ;; NOTE: Normally the initial-db we pass here should be already normalized
+      ;; but since we do not care about normalization and are happy with
+      ;; denormalized data in this exercise, it is OK to pass in the data tree
+      ;; as-is.
+      ;; BEWARE: The initial data is only processed at app initialization, i.e.
+      ;; not after hot-reloading of a code change
+      {:page/heading                  "<3> Fulcro is:"
+       :page/value-proposition-points [{:proposition/label "Malleable"}
+                                       {:proposition/label "Full-stack"}
+                                       {:proposition/label "Well-designed"}]}})
 
-    ;(hint 3)
+    ;; (hint 3)
     ;; Tip: Use Fulcro Inspect to see the content of the client DB
     ;;      Also try to use the provided `(show-client-db)` function for that.
     ,))
@@ -209,8 +209,8 @@
     ;; What do you think the client DB will look like? Think, write it down, then check it
     ;; using Fulcro Inspect - DB (or `(show-client-db)`)
     (merge/merge! app4 nil nil) ; TODO Implement
-    ; (hint 4)
-    ; (hint 4)
+    ;; (hint 4)
+    ;; (hint 4)
     ,))
 
 (comment ; 5 "Normalization and merge! and merge-component!"
@@ -258,9 +258,9 @@
     (defsc Root5 [_ {teams :teams}]
       {:query [:teams]} ; NOTE: This is on purpose incomplete
       (div
-        (h1 "Teams")
-        (p "Debug: teams = " (dom/code (pr-str teams)))
-        (map ui-team teams)))
+       (h1 "Teams")
+       (p "Debug: teams = " (dom/code (pr-str teams)))
+       (map ui-team teams)))
 
     (def data-tree
       "The data that our UI should display"
@@ -275,28 +275,28 @@
     ;; 1. Uncomment, complete, and run the merge/merge! call below to insert the data-tree into
     ;;    the client DB. Check the UI shows it.
     (comment (merge/merge! ...))
-    ; (hint 5)
-    ; (hint 5)
+    ;; (hint 5)
+    ;; (hint 5)
 
     ;; More tasks!
     ;; 2. Make sure the data is normalized in the DB by adding idents. What will the DB look like?
-    ; (hint 5)
-    ; (hint 5)
+    ;; (hint 5)
+    ;; (hint 5)
     ;;
     ;; 3. Now, even if your idents are correct, the data still does not
     ;;    seem to be normalized as you would expect. Why? What did we forget?
     ;;    Is something wrong with our queries?! (Hint: yes, it is)
     ;;    Fix it and try again!
     ;;    Tip: force-reload the page to clean the client DB
-    ; (hint 5)
+    ;; (hint 5)
 
     ;; 4. Rewrite the code to use merge/merge-component! instead.
     ;;    What is the correct target component? How to make sure the data looks
     ;;    just like before?
     ;;   Really try your best to make the right merge-component! call!
-    ; (hint 5)
-    ; (hint 5)
-    ; (hint 5)
+    ;; (hint 5)
+    ;; (hint 5)
+    ;; (hint 5)
     ,))
 
 (comment ; 6 Client-side mutations
@@ -350,10 +350,10 @@
       {:query [:player/id :player/name :ui/checked?]
        :ident :player/id}
       (li
-        (input {:type    "checkbox"
-                :checked (boolean checked?)
-                :onClick #(println "TODO: trigger the mutation `(set-players-checked {:players [id] :value (not checked?)})`")})
-        name))
+       (input {:type    "checkbox"
+               :checked (boolean checked?)
+               :onClick #(println "TODO: trigger the mutation `(set-players-checked {:players [id] :value (not checked?)})`")})
+       name))
 
     (def ui-player (comp/factory Player {:keyfn :player/id}))
 
@@ -373,22 +373,22 @@
     (defsc Root6 [this {teams :teams}]
       {:query [{:teams (comp/get-query Team)}]}
       (form
-        (h1 "Teams")
-        (button {:type "button"
-                 :onClick #(println "TODO: trigger the mutation `(delete-selected nil)`")}  ; TODO implement
-                "Delete selected")
-        (map ui-team teams)))
+       (h1 "Teams")
+       (button {:type "button"
+                :onClick #(println "TODO: trigger the mutation `(delete-selected nil)`")}  ; TODO implement
+               "Delete selected")
+       (map ui-team teams)))
 
     (def app6 (config-and-render! Root6))
 
     (run!
-      #(merge/merge-component! app6 Team % :append [:teams])
-      [#:team{:name "Explorers" :id :explorers
-              :players [#:player{:id 1 :name "Jo"}
-                        #:player{:id 2 :name "Ola"}
-                        #:player{:id 3 :name "Anne"}]}
-       #:team{:name "Bikers" :id :bikers
-              :players [#:player{:id 4 :name "Cyclotron"}]}])
+     #(merge/merge-component! app6 Team % :append [:teams])
+     [#:team{:name "Explorers" :id :explorers
+             :players [#:player{:id 1 :name "Jo"}
+                       #:player{:id 2 :name "Ola"}
+                       #:player{:id 3 :name "Anne"}]}
+      #:team{:name "Bikers" :id :bikers
+             :players [#:player{:id 4 :name "Cyclotron"}]}])
 
     ,))
 
@@ -437,22 +437,25 @@
     (defsc Root7 [this {teams :teams :as props}]
       {:query [{:teams (comp/get-query Team)}]}
       (div
-        ;; Code for task 2 (described further down) - un-comment and complete this code:
-        ;(button {:type "button"
-        ;         :onClick #(println "df/load! the data from here")} "Load data")
-        (let [loading? false] ; scaffolding for TASK 5
-          (cond
-            loading? (p "Loading...")
-            ;; ...
-            :else
-            (comp/fragment (h1 "Teams")
-                           (map ui-team teams))))))
+       ;; Code for task 2 (described further down) - un-comment and complete
+       ;; this code:
+       ;;
+       ;; (button {:type "button"
+       ;;          :onClick #(println "df/load! the data from here")}
+       ;;         "Load data")
+       (let [loading? false] ; scaffolding for TASK 5
+         (cond
+           loading? (p "Loading...")
+           ;; ...
+           :else
+           (comp/fragment (h1 "Teams")
+                          (map ui-team teams))))))
 
     ;; --- "Backend" resolvers to feed data to load! ---
     (defresolver my-very-awesome-teams [_ _] ; a global resolver
       {::pc/input  #{}
        ::pc/output [{:teams [:team/id :team/name
-                             {:team/players [:player/id :player/name 
+                             {:team/players [:player/id :player/name
                                              ;; NOTE: We need this 👇 instead of just `:player/address` so that autocomplete
                                              ;; in Fulcro Inspect - EQL understands this is address and can get to id, city
                                              {:player/address [:address/id]}]}]}]}
@@ -504,6 +507,6 @@
 ;;   - pre-merge ?! / loading dyn. data for a defsc containing a router x we did not learn routers
 ;;   - Link Query? But not covered by MFT
 ;; Other:
-;; @peterdee:  incremental loading of big trees of data. Incremental loading is probably discussed 
-;; adequately in the Developer Guide, but not with recursive queries, and incremental expansion of a UI tree, 
+;; @peterdee:  incremental loading of big trees of data. Incremental loading is probably discussed
+;; adequately in the Developer Guide, but not with recursive queries, and incremental expansion of a UI tree,
 ;; I think. If that seems like too much an edge case, maybe something simpler with trees.
