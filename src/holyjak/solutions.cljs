@@ -34,12 +34,11 @@
     (defsc Root1 [_ _]
       {}
       #_"TODO"
-      (dom/div
-       (dom/h1 :#title {:style {:textAlign "center"}} "Fulcro is:")
-       (dom/ul
-        (dom/li "Malleable")
-        (dom/li "Full-stack")
-        (dom/li "Well-designed"))))
+      (dom/div (dom/h1 :#title {:style {:textAlign "center"}}
+                       "Fulcro is:")
+               (dom/ul (dom/li "Malleable")
+                       (dom/li "Full-stack")
+                       (dom/li "Well-designed"))))
 
     (config-and-render! Root1)))
 
@@ -65,7 +64,6 @@
 
     (defsc Root2 [_ _]
       {}
-      #_"TODO"
       (dom/div
        (dom/h1 :#title {:style {:textAlign "center"}} "<2> Fulcro is:")
        (dom/ul (map ui-value-proposition-point-v2 value-proposition-points))))
