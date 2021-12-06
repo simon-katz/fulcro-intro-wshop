@@ -57,17 +57,18 @@
        {:proposition/label "Full-stack"}
        {:proposition/label "Well-designed"}])
 
-    (defsc ValuePropositionPoint [_ {:proposition/keys [label]}]
+    (defsc ValuePropositionPointV2 [_ {:proposition/keys [label]}]
       (li label))
 
-    (def ui-value-proposition-point (comp/factory ValuePropositionPoint {:keyfn :proposition/label}))
+    (def ui-value-proposition-point-v2
+      (comp/factory ValuePropositionPointV2 {:keyfn :proposition/label}))
 
     (defsc Root2 [_ _]
       {}
       #_"TODO"
       (div
        (h1 :#title {:style {:textAlign "center"}} "<2> Fulcro is:")
-       (ul (map ui-value-proposition-point value-proposition-points))))
+       (ul (map ui-value-proposition-point-v2 value-proposition-points))))
 
     (config-and-render! Root2)
     ,))
@@ -81,18 +82,18 @@
 
 (comment ; 3 "Externalizing data"
   (do
-    (defsc ValuePropositionPoint [_ {:proposition/keys [label]}]
+    (defsc ValuePropositionPointV3 [_ {:proposition/keys [label]}]
       {:query [:proposition/label]}
       (li label))
 
-    (def ui-value-proposition-point (comp/factory ValuePropositionPoint {:keyfn :proposition/label}))
+    (def ui-value-proposition-point-v3
+      (comp/factory ValuePropositionPointV3 {:keyfn :proposition/label}))
 
     (defsc Root3 [_ {:page/keys [heading value-proposition-points]}]
-      {:query [:page/heading {:page/value-proposition-points (comp/get-query ValuePropositionPoint)}]}
-      #_"TODO"
+      {:query [:page/heading {:page/value-proposition-points (comp/get-query ValuePropositionPointV3)}]}
       (div
        (h1 :#title {:style {:textAlign "center"}} "hdr:" heading)
-       (ul (map ui-value-proposition-point value-proposition-points))))
+       (ul (map ui-value-proposition-point-v3 value-proposition-points))))
 
     (config-and-render!
      Root3
@@ -112,18 +113,18 @@
 
 (comment ; 4 "Insert data into the client DB with merge/merge!"
   (do
-    (defsc ValuePropositionPoint [_ {:proposition/keys [label]}]
+    (defsc ValuePropositionPointV4 [_ {:proposition/keys [label]}]
       {:query [:proposition/label]}
       (li label))
 
-    (def ui-value-proposition-point (comp/factory ValuePropositionPoint {:keyfn :proposition/label}))
+    (def ui-value-proposition-point-v4 (comp/factory ValuePropositionPointV4 {:keyfn :proposition/label}))
 
     (defsc Root4 [_ {:page/keys [heading value-proposition-points]}]
-      {:query [:page/heading {:page/value-proposition-points (comp/get-query ValuePropositionPoint)}]}
+      {:query [:page/heading {:page/value-proposition-points (comp/get-query ValuePropositionPointV4)}]}
       #_"TODO"
       (div
        (h1 :#title {:style {:textAlign "center"}} "hdr:" heading)
-       (ul (map ui-value-proposition-point value-proposition-points))))
+       (ul (map ui-value-proposition-point-v4 value-proposition-points))))
 
     (def app4 (config-and-render! Root4))
 

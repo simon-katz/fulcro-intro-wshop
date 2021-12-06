@@ -110,7 +110,7 @@
   (do
     ;; TASK:
     ;; Refactor the previous solution by moving the `<li>` into a separate
-    ;; component called `ValuePropositionPoint` and `map` over the provided
+    ;; component called `ValuePropositionPointV2` and `map` over the provided
     ;; `value-proposition-points` to produce the whole list.
     ;; TIP: When you paste the previous code and Calva messes up the indentation,
     ;;      select all of the wrongly indented code and press `tab` to fix it
@@ -127,17 +127,17 @@
        {:proposition/label "Full-stack"}
        {:proposition/label "Well-designed"}])
 
-    (defsc ValuePropositionPoint [_ {:proposition/keys [label]}]
+    (defsc ValuePropositionPointV2 [_ {:proposition/keys [label]}]
       (dom/li label))
 
-    (def ui-value-proposition-point
-      (comp/factory ValuePropositionPoint {:keyfn :proposition/label}))
+    (def ui-value-proposition-point-v2
+      (comp/factory ValuePropositionPointV2 {:keyfn :proposition/label}))
 
     (defsc Root2 [_ _]
       {}
       (dom/div
        (dom/h1 :#title {:style {:textAlign "center"}} "<2> Fulcro is:")
-       (dom/ul (map ui-value-proposition-point value-proposition-points))))
+       (dom/ul (map ui-value-proposition-point-v2 value-proposition-points))))
 
     (config-and-render! Root2)
     ;; (hint 2)
