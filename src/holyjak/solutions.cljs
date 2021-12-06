@@ -9,7 +9,7 @@
    [com.fulcrologic.fulcro.components :as comp :refer [defsc transact!]]
    [com.fulcrologic.fulcro.data-fetch :as df]
    [com.fulcrologic.fulcro.mutations :refer [defmutation]]
-   [com.fulcrologic.fulcro.dom :as dom :refer [button div form h1 h2 h3 input label li ol p ul]]
+   [com.fulcrologic.fulcro.dom :as dom]
    [com.wsscode.pathom.connect :as pc :refer [defresolver]]))
 
 ;; TIP: Use your editor's powers to collapse all the comments and only open the one you want to study
@@ -18,7 +18,7 @@
 (comment ; 0 "Try it out!"
   (do
     (defsc Root0 [_ _]
-      (h1 "Hello, I am a Fulcro app from the exercise 0!"))
+      (dom/h1 "Hello, I am a Fulcro app from the exercise 0!"))
 
     (config-and-render! Root0)
 
@@ -34,12 +34,12 @@
     (defsc Root1 [_ _]
       {}
       #_"TODO"
-      (div
-       (h1 :#title {:style {:textAlign "center"}} "Fulcro is:")
-       (ul
-        (li "Malleable")
-        (li "Full-stack")
-        (li "Well-designed"))))
+      (dom/div
+       (dom/h1 :#title {:style {:textAlign "center"}} "Fulcro is:")
+       (dom/ul
+        (dom/li "Malleable")
+        (dom/li "Full-stack")
+        (dom/li "Well-designed"))))
 
     (config-and-render! Root1)))
 
@@ -58,7 +58,7 @@
        {:proposition/label "Well-designed"}])
 
     (defsc ValuePropositionPointV2 [_ {:proposition/keys [label]}]
-      (li label))
+      (dom/li label))
 
     (def ui-value-proposition-point-v2
       (comp/factory ValuePropositionPointV2 {:keyfn :proposition/label}))
@@ -66,9 +66,9 @@
     (defsc Root2 [_ _]
       {}
       #_"TODO"
-      (div
-       (h1 :#title {:style {:textAlign "center"}} "<2> Fulcro is:")
-       (ul (map ui-value-proposition-point-v2 value-proposition-points))))
+      (dom/div
+       (dom/h1 :#title {:style {:textAlign "center"}} "<2> Fulcro is:")
+       (dom/ul (map ui-value-proposition-point-v2 value-proposition-points))))
 
     (config-and-render! Root2)
     ,))
@@ -84,16 +84,16 @@
   (do
     (defsc ValuePropositionPointV3 [_ {:proposition/keys [label]}]
       {:query [:proposition/label]}
-      (li label))
+      (dom/li label))
 
     (def ui-value-proposition-point-v3
       (comp/factory ValuePropositionPointV3 {:keyfn :proposition/label}))
 
     (defsc Root3 [_ {:page/keys [heading value-proposition-points]}]
       {:query [:page/heading {:page/value-proposition-points (comp/get-query ValuePropositionPointV3)}]}
-      (div
-       (h1 :#title {:style {:textAlign "center"}} "hdr:" heading)
-       (ul (map ui-value-proposition-point-v3 value-proposition-points))))
+      (dom/div
+       (dom/h1 :#title {:style {:textAlign "center"}} "hdr:" heading)
+       (dom/ul (map ui-value-proposition-point-v3 value-proposition-points))))
 
     (config-and-render!
      Root3
@@ -115,16 +115,16 @@
   (do
     (defsc ValuePropositionPointV4 [_ {:proposition/keys [label]}]
       {:query [:proposition/label]}
-      (li label))
+      (dom/li label))
 
     (def ui-value-proposition-point-v4 (comp/factory ValuePropositionPointV4 {:keyfn :proposition/label}))
 
     (defsc Root4 [_ {:page/keys [heading value-proposition-points]}]
       {:query [:page/heading {:page/value-proposition-points (comp/get-query ValuePropositionPointV4)}]}
       #_"TODO"
-      (div
-       (h1 :#title {:style {:textAlign "center"}} "hdr:" heading)
-       (ul (map ui-value-proposition-point-v4 value-proposition-points))))
+      (dom/div
+       (dom/h1 :#title {:style {:textAlign "center"}} "hdr:" heading)
+       (dom/ul (map ui-value-proposition-point-v4 value-proposition-points))))
 
     (def app4 (config-and-render! Root4))
 
@@ -150,26 +150,26 @@
   (do
     (defsc Address [_ {city :address/city}]
       {:query [:address/city]}
-      (p "City: " city))
+      (dom/p "City: " city))
 
     (defsc Player [_ {:player/keys [name address]}]
       {:query [:player/id :player/name :player/address]}
-      (li "name: " name " lives at: " ((comp/factory Address) address)))
+      (dom/li "name: " name " lives at: " ((comp/factory Address) address)))
 
     (def ui-player (comp/factory Player {:keyfn :player/id}))
 
     (defsc Team [_ {:team/keys [name players]}]
       {:query [:team/id :team/name :team/players]}
-      (div (h2 "Team " name ":")
-           (ol (map ui-player players))))
+      (dom/div (dom/h2 "Team " name ":")
+               (dom/ol (map ui-player players))))
 
     (def ui-team (comp/factory Team {:keyfn :team/id}))
 
     (defsc Root5 [_ {teams :teams}]
       {:query [:teams]} ; NOTE: This is on purpose incomplete
-      (div
-       (h1 "Teams")
-       (p "Debug: teams = " (dom/code (pr-str teams)))
+      (dom/div
+       (dom/h1 "Teams")
+       (dom/p "Debug: teams = " (dom/code (pr-str teams)))
        (map ui-team teams)))
 
     (def data-tree
@@ -190,28 +190,28 @@
     (defsc Address [_ {city :address/city}]
       {:query [:address/city]
        :ident :address/city}
-      (p "City: " city))
+      (dom/p "City: " city))
 
     (defsc Player [_ {:player/keys [name address]}]
       {:query [:player/id :player/name {:player/address (comp/get-query Address)}]
        :ident :player/id}
-      (li "name: " name " lives at: " ((comp/factory Address) address)))
+      (dom/li "name: " name " lives at: " ((comp/factory Address) address)))
 
     (def ui-player (comp/factory Player {:keyfn :player/id}))
 
     (defsc Team [_ {:team/keys [name players]}]
       {:query [:team/id :team/name {:team/players (comp/get-query Player)}]
        :ident :team/id}
-      (div (h2 "Team " name ":")
-           (ol (map ui-player players))))
+      (dom/div (dom/h2 "Team " name ":")
+               (dom/ol (map ui-player players))))
 
     (def ui-team (comp/factory Team {:keyfn :team/id}))
 
     (defsc Root5 [_ {teams :teams}]
       {:query [{:teams (comp/get-query Team)}]} ; NOTE: This is on purpose incomplete
-      (div
-       (h1 "Teams")
-       (p "Debug: teams = " (dom/code (pr-str teams)))
+      (dom/div
+       (dom/h1 "Teams")
+       (dom/p "Debug: teams = " (dom/code (pr-str teams)))
        (map ui-team teams)))
 
     (def data-tree
@@ -303,10 +303,10 @@
     (defsc Player [this {:keys [player/id player/name ui/checked?]}]
       {:query [:player/id :player/name :ui/checked?]
        :ident :player/id}
-      (li
-       (input {:type    "checkbox"
-               :checked (boolean checked?)
-               :onClick #(transact! this [(set-players-checked {:players [id] :value (not checked?)})])})
+      (dom/li
+       (dom/input {:type    "checkbox"
+                   :checked (boolean checked?)
+                   :onClick #(transact! this [(set-players-checked {:players [id] :value (not checked?)})])})
        name))
 
     (def ui-player (comp/factory Player {:keyfn :player/id}))
@@ -315,22 +315,22 @@
       {:query [:team/id :team/name :ui/checked? {:team/players (comp/get-query Player)}]
        :ident :team/id}
       (let [all-checked? (boolean (and (seq players) (every? :ui/checked? players)))]
-        (div (h2 "Team " name ":")
-             (label (input {:type    "checkbox"
-                            :checked all-checked?
-                            :onClick #(transact! this [(set-players-checked {:players (map :player/id players)
-                                                                             :value   (not all-checked?)})])})
-                    "Select all")
-             (ol (map ui-player players)))))
+        (dom/div (dom/h2 "Team " name ":")
+                 (dom/label (dom/input {:type    "checkbox"
+                                        :checked all-checked?
+                                        :onClick #(transact! this [(set-players-checked {:players (map :player/id players)
+                                                                                         :value   (not all-checked?)})])})
+                            "Select all")
+                 (dom/ol (map ui-player players)))))
 
     (def ui-team (comp/factory Team {:keyfn :team/id}))
 
     (defsc Root6 [this {teams :teams}]
       {:query [{:teams (comp/get-query Team)}]}
-      (form
-       (h1 "Teams")
-       (button {:type "button"
-                :onClick #(transact! this [(delete-selected nil)])} "Delete selected")
+      (dom/form
+       (dom/h1 "Teams")
+       (dom/button {:type "button"
+                    :onClick #(transact! this [(delete-selected nil)])} "Delete selected")
        (map ui-team teams)))
 
     (def app6 (config-and-render! Root6))
@@ -354,34 +354,34 @@
     (defsc Address [_ {city :address/city}]
       {:query [:address/city]
        :ident :address/city}
-      (p "City: " city))
+      (dom/p "City: " city))
 
     (defsc Player [_ {:player/keys [name address]}]
       {:query [:player/id :player/name {:player/address (comp/get-query Address)}]
        :ident :player/id}
-      (li "Player: " name " lives at: " ((comp/factory Address) address)))
+      (dom/li "Player: " name " lives at: " ((comp/factory Address) address)))
 
     (def ui-player (comp/factory Player {:keyfn :player/id}))
 
     (defsc Team [_ {:team/keys [name players]}]
       {:query [:team/id :team/name {:team/players (comp/get-query Player)}]
        :ident :team/id}
-      (div (h2 "Team " name ":")
-           (ol (map ui-player players))))
+      (dom/div (dom/h2 "Team " name ":")
+               (dom/ol (map ui-player players))))
 
     (def ui-team (comp/factory Team {:keyfn :team/id}))
 
     (defsc Root7 [this {teams :teams}]
       {:query [{:teams (comp/get-query Team)}]}
-      (div
-       (button {:type "button" ; VARIANT 7.2; comment out for 7.1
-                :onClick #(df/load! this :teams Team)} "Load data")
+      (dom/div
+       (dom/button {:type "button" ; VARIANT 7.2; comment out for 7.1
+                    :onClick #(df/load! this :teams Team)} "Load data")
        (let [loading? false] ; scaffolding for TASK 5
          (cond
-           loading? (p "Loading...")
+           loading? (dom/p "Loading...")
            ;; ...
            :else
-           (comp/fragment (h1 "Teams")
+           (comp/fragment (dom/h1 "Teams")
                           (map ui-team teams))))))
 
     ;; --- "Backend" resolvers to feed data to load! ---
@@ -457,15 +457,15 @@
     ;; <THE SAME CODE AS ABOVE EXCLUDING Root7 HERE...>
     (defsc Root7 [this {teams :all-teams}]
       {:query [{:all-teams (comp/get-query Team)}]}
-      (div
-       (button {:type "button"
-                :onClick #(df/load! this :teams Team {:target (targeting/replace-at [:all-teams])})} "Load data")
+      (dom/div
+       (dom/button {:type "button"
+                    :onClick #(df/load! this :teams Team {:target (targeting/replace-at [:all-teams])})} "Load data")
        (let [loading? false] ; scaffolding for TASK 5
          (cond
-           loading? (p "Loading...")
+           loading? (dom/p "Loading...")
            ;; ...
            :else
-           (comp/fragment (h1 "Teams")
+           (comp/fragment (dom/h1 "Teams")
                           (map ui-team teams))))))
 
     ,))
@@ -476,16 +476,16 @@
     ;; <THE SAME CODE AS ABOVE EXCLUDING Root7 HERE...>
     (defsc Root7 [this {teams :all-teams :as props}]
       {:query [{:all-teams (comp/get-query Team)} [df/marker-table :teams]]}
-      (div
-       (button {:type "button"
-                :onClick #(df/load! this :teams Team {:target (targeting/replace-at [:all-teams])
-                                                      :marker :teams})}
-               "Load data")
+      (dom/div
+       (dom/button {:type "button"
+                    :onClick #(df/load! this :teams Team {:target (targeting/replace-at [:all-teams])
+                                                          :marker :teams})}
+                   "Load data")
        (let [marker (get props [df/marker-table :teams])]
          (cond
-           (df/loading? marker) (p "Loading...")
+           (df/loading? marker) (dom/p "Loading...")
            ;; ...
            :else
-           (comp/fragment (h1 "Teams")
+           (comp/fragment (dom/h1 "Teams")
                           (map ui-team teams))))))
     ,))

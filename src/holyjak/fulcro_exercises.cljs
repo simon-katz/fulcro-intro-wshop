@@ -39,7 +39,7 @@
    [com.fulcrologic.fulcro.components :as comp :refer [defsc transact!]]
    [com.fulcrologic.fulcro.data-fetch :as df]
    [com.fulcrologic.fulcro.mutations :refer [defmutation]]
-   [com.fulcrologic.fulcro.dom :as dom :refer [button div form h1 h2 h3 input label li ol p ul]]
+   [com.fulcrologic.fulcro.dom :as dom]
    [com.wsscode.pathom.connect :as pc :refer [defresolver]]))
 
 (defn init [])
@@ -51,10 +51,10 @@
     ;; TASK 0.0: Comment this out by replacing the `(do; comment` above with `(comment` and go on to the next exercise.
     ;; LEARNING OBJECTIVES: Get familiar with switching from an exercise to another.
     (defsc Root00 [_ _]
-      (div
-       (h1 "Welcome to Fulcro exercises!")
-       (p "This is an example what an exercise looks like while you work on it.")
-       (p "Just comment this exercises out as describe in the code comment above and go on to the next.")))
+      (dom/div
+       (dom/h1 "Welcome to Fulcro exercises!")
+       (dom/p "This is an example what an exercise looks like while you work on it.")
+       (dom/p "Just comment this exercises out as describe in the code comment above and go on to the next.")))
 
     (config-and-render! Root00)
     ,))
@@ -65,7 +65,7 @@
   (do
     ;; LEARNING OBJECTIVES: Get familiar with switching to a new exercise and using the hints.
     (defsc Root0 [_ _]
-      (h1 "Hello, I am a Fulcro app from the exercise 0!"))
+      (dom/h1 "Hello, I am a Fulcro app from the exercise 0!"))
 
     (config-and-render! Root0)
 
@@ -97,9 +97,9 @@
     ;; - https://reactjs.org/docs/dom-elements.html#style
     (defsc Root1 [_ _]
       {}
-      (dom/div (h1 {:id    "title2"
-                    :style {:text-align "center"}}
-                   "Fulcro is:")
+      (dom/div (dom/h1 {:id    "title2"
+                        :style {:text-align "center"}}
+                       "Fulcro is:")
                (dom/ul (dom/li "Malleable")
                        (dom/li "Full-stack")
                        (dom/li "Well-designed"))))
@@ -163,16 +163,16 @@
 
     (defsc ValuePropositionPointV3 [_ {:proposition/keys [label]}]
       {:query [:proposition/label]}
-      (li label))
+      (dom/li label))
 
     (def ui-value-proposition-point-v3
       (comp/factory ValuePropositionPointV3 {:keyfn :proposition/label}))
 
     (defsc Root3 [_ {:page/keys [heading value-proposition-points]}]
       {:query [:page/heading {:page/value-proposition-points (comp/get-query ValuePropositionPointV3)}]}
-      (div
-       (h1 :#title {:style {:textAlign "center"}} "hdr:" heading)
-       (ul (map ui-value-proposition-point-v3 value-proposition-points))))
+      (dom/div
+       (dom/h1 :#title {:style {:textAlign "center"}} "hdr:" heading)
+       (dom/ul (map ui-value-proposition-point-v3 value-proposition-points))))
 
     (config-and-render!
      Root3
@@ -250,26 +250,26 @@
     ;; - https://book.fulcrologic.com/#_using_mergemerge_component
     (defsc Address [_ {city :address/city}]
       {:query [:address/city]}
-      (p "City: " city))
+      (dom/p "City: " city))
 
     (defsc Player [_ {:player/keys [name address]}]
       {:query [:player/id :player/name :player/address]}
-      (li "name: " name " lives at: " ((comp/factory Address) address)))
+      (dom/li "name: " name " lives at: " ((comp/factory Address) address)))
 
     (def ui-player (comp/factory Player {:keyfn :player/id}))
 
     (defsc Team [_ {:team/keys [name players]}]
       {:query [:team/id :team/name :team/players]}
-      (div (h2 "Team " name ":")
-           (ol (map ui-player players))))
+      (dom/div (dom/h2 "Team " name ":")
+               (dom/ol (map ui-player players))))
 
     (def ui-team (comp/factory Team {:keyfn :team/id}))
 
     (defsc Root5 [_ {teams :teams}]
       {:query [:teams]} ; NOTE: This is on purpose incomplete
-      (div
-       (h1 "Teams")
-       (p "Debug: teams = " (dom/code (pr-str teams)))
+      (dom/div
+       (dom/h1 "Teams")
+       (dom/p "Debug: teams = " (dom/code (pr-str teams)))
        (map ui-team teams)))
 
     (def data-tree
@@ -359,10 +359,10 @@
     (defsc Player [this {:keys [player/id player/name ui/checked?]}]
       {:query [:player/id :player/name :ui/checked?]
        :ident :player/id}
-      (li
-       (input {:type    "checkbox"
-               :checked (boolean checked?)
-               :onClick #(println "TODO: trigger the mutation `(set-players-checked {:players [id] :value (not checked?)})`")})
+      (dom/li
+       (dom/input {:type    "checkbox"
+                   :checked (boolean checked?)
+                   :onClick #(println "TODO: trigger the mutation `(set-players-checked {:players [id] :value (not checked?)})`")})
        name))
 
     (def ui-player (comp/factory Player {:keyfn :player/id}))
@@ -371,22 +371,22 @@
       {:query [:team/id :team/name :ui/checked? {:team/players (comp/get-query Player)}]
        :ident :team/id}
       (let [all-checked? (and (seq players) (every? :ui/checked? players))]
-        (div (h2 "Team " name ":")
-             (label (input {:type    "checkbox"
-                            :checked all-checked?
-                            :onClick #(println "TODO: trigger the mutation `(set-players-checked {:players (map :player/id players) :value (not all-checked?)})`")})
-                    "Select all")
-             (ol (map ui-player players)))))
+        (dom/div (dom/h2 "Team " name ":")
+                 (dom/label (dom/input {:type    "checkbox"
+                                        :checked all-checked?
+                                        :onClick #(println "TODO: trigger the mutation `(set-players-checked {:players (map :player/id players) :value (not all-checked?)})`")})
+                            "Select all")
+                 (dom/ol (map ui-player players)))))
 
     (def ui-team (comp/factory Team {:keyfn :team/id}))
 
     (defsc Root6 [this {teams :teams}]
       {:query [{:teams (comp/get-query Team)}]}
-      (form
-       (h1 "Teams")
-       (button {:type "button"
-                :onClick #(println "TODO: trigger the mutation `(delete-selected nil)`")}  ; TODO implement
-               "Delete selected")
+      (dom/form
+       (dom/h1 "Teams")
+       (dom/button {:type "button"
+                    :onClick #(println "TODO: trigger the mutation `(delete-selected nil)`")}  ; TODO implement
+                   "Delete selected")
        (map ui-team teams)))
 
     (def app6 (config-and-render! Root6))
@@ -427,38 +427,38 @@
     (defsc Address [_ {city :address/city}]
       {:query [:address/city]
        :ident :address/city}
-      (p "City: " city))
+      (dom/p "City: " city))
 
     (defsc Player [_ {:player/keys [name address]}]
       {:query [:player/id :player/name {:player/address (comp/get-query Address)}]
        :ident :player/id}
-      (li "Player: " name " lives at: " ((comp/factory Address) address)))
+      (dom/li "Player: " name " lives at: " ((comp/factory Address) address)))
 
     (def ui-player (comp/factory Player {:keyfn :player/id}))
 
     (defsc Team [_ {:team/keys [name players]}]
       {:query [:team/id :team/name {:team/players (comp/get-query Player)}]
        :ident :team/id}
-      (div (h2 "Team " name ":")
-           (ol (map ui-player players))))
+      (dom/div (dom/h2 "Team " name ":")
+               (dom/ol (map ui-player players))))
 
     (def ui-team (comp/factory Team {:keyfn :team/id}))
 
     (defsc Root7 [this {teams :teams :as props}]
       {:query [{:teams (comp/get-query Team)}]}
-      (div
+      (dom/div
        ;; Code for task 2 (described further down) - un-comment and complete
        ;; this code:
        ;;
-       ;; (button {:type "button"
-       ;;          :onClick #(println "df/load! the data from here")}
-       ;;         "Load data")
+       ;; (dom/button {:type "button"
+       ;;              :onClick #(println "df/load! the data from here")}
+       ;;             "Load data")
        (let [loading? false] ; scaffolding for TASK 5
          (cond
-           loading? (p "Loading...")
+           loading? (dom/p "Loading...")
            ;; ...
            :else
-           (comp/fragment (h1 "Teams")
+           (comp/fragment (dom/h1 "Teams")
                           (map ui-team teams))))))
 
     ;; --- "Backend" resolvers to feed data to load! ---
